@@ -8,4 +8,7 @@ class Settings:
     FONT_TYPE = 'Comic Sans MS'
     FONT_SIZE = 20
     MAX_COMMANDS_PER_TICK = 2
+    BULLET_SPEED = 10
+    BULLET_TICK = 1000
     lastUpdatedTick = 0
+

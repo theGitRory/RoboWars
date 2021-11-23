@@ -6,9 +6,10 @@ class DanielRobot(Robot):
         super().__init__(x, y, image, name)
     
     def update(self):
-        self.moveDown()
+        super().update()
+        #self.moveDown()
         self.turnRight()
-
+        self.shoot()
         #self.moveUp()
         #self.moveLeft()
         #self.moveRight()

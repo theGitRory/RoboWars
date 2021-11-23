@@ -1,6 +1,9 @@
 import pygame
 from Settings import Settings
 from abc import abstractmethod
+from Bullet import Bullet
+from BulletManager import BulletManager
+import time
 
 
 class Robot(pygame.sprite.Sprite):
@@ -21,10 +24,11 @@ class Robot(pygame.sprite.Sprite):
         self.__health = Settings.HEALTH
         self.__rect.centery = y
         self.__rect.centerx = x
-        self.myfont = pygame.font.SysFont('Comic Sans MS', 20)
-        self.__textSurface = self.myfont.render(self.getName() + " - " + str(self.getHealth()), False, (0, 0, 0))
+        self.__myfont = pygame.font.SysFont('Comic Sans MS', 20)
+        self.__textSurface = self.__myfont.render(self.getName() + " - " + str(self.getHealth()), False, (0, 0, 0))
         self.__isAlive = True
         self.__commandsIssued = 0
+        self.__lastBulletFired = 0
 
     def getName(self):
         return self.__name
@@ -58,7 +62,7 @@ class Robot(pygame.sprite.Sprite):
     
     def takeDamage(self, amount):
         self.__health -= amount
-        self.__textSurface = self.myfont.render(self.getName() + " - " + str(self.getHealth()), False, (0, 0, 0))
+        self.__textSurface = self.__myfont.render(self.getName() + " - " + str(self.getHealth()), False, (0, 0, 0))
 
     def isAlive(self):
         if self.getHealth() <= 0:
@@ -80,6 +84,13 @@ class Robot(pygame.sprite.Sprite):
                 self.__rect.centerx += self.__speed
                 self.__commandsIssued += 1
 
+    def shoot(self):
+        last = round(time.time() * 1000)
+        if self.canRunCommand() and (last - self.__lastBulletFired) > Settings.BULLET_TICK:
+            BulletManager.SINGLETON.addBullets(Bullet(self.__rect.center, self.direction.normalize()))
+            self.__lastBulletFired = last
+            self.__commandsIssued += 1
+  
     def canRunCommand(self):
         boolVal = self.isAlive() and self.__commandsIssued < Settings.MAX_COMMANDS_PER_TICK
         return boolVal
@@ -129,4 +140,5 @@ class Robot(pygame.sprite.Sprite):
 
     @abstractmethod
     def update(self):
-        raise Exception('Update method not implemented')
+        self.direction = pygame.Vector2(1, 0).rotate(-self.__angle)
+        #raise Exception('Update method not implemented')

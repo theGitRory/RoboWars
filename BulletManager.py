@@ -1,10 +1,37 @@
+import pygame
+from Settings import Settings
+
 class BulletManager():
 
-    bulletArr = []
+    SINGLETON = None
+
+    def __init__(self, screen):
+        self.screen = screen
+        self.__bulletArr = []
+
+
+    def draw(self, screen):     
+        for p in self.getBullets():
+            p.draw(screen)   
 
     @staticmethod
-    def addBullets(bullet):
-        BulletManager.bulletArr.append(bullet)
+    def getBulletManager():
+        return BulletManager.SINGLETON
+    
+    @staticmethod
+    def createBulletManager(screen):
+        BulletManager.SINGLETON = BulletManager(screen)
+        return BulletManager.SINGLETON
 
-    def getBullets():
-        return BulletManager.bulletArr
+    def addBullets(self, bullet):
+        self.__bulletArr.append(bullet)
+
+    def getBullets(self):
+        return self.__bulletArr
+
+    def update(self, event, dt):
+        for i in self.__bulletArr:
+            if i.update(event, dt):
+                i.draw(self.screen)
+            else:
+                self.__bulletArr.remove(i)

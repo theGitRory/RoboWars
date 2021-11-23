@@ -6,6 +6,6 @@ class AIRobot(Robot):
         super().__init__(x, y, image, name)
 
     def update(self):
-        #self.moveLeft()
+        self.moveLeft()
         #self.takeDamage(1)
         pass
