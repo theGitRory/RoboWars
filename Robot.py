@@ -12,6 +12,8 @@ class Robot(pygame.sprite.Sprite):
         self.__rect = self.__surf.get_rect()
         self.__name = name
         self.__angle = 0
+        self.direction = pygame.Vector2(1, 0)
+
         #
         #   Settings
         #
@@ -122,6 +124,7 @@ class Robot(pygame.sprite.Sprite):
         # Draws the UI Text
         x = self.getRect().centerx - (self.getOriginalSize()[0] - 120)
         y = self.getRect().centery - (self.getOriginalSize()[1] - 60)
+
         screen.blit(self.getTextSurface(),(x, y))
 
     @abstractmethod
