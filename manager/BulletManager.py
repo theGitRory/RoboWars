@@ -1,5 +1,4 @@
 import pygame
-from Settings import Settings
 
 class BulletManager():
 
@@ -8,7 +7,6 @@ class BulletManager():
     def __init__(self, screen):
         self.screen = screen
         self.__bulletArr = []
-
 
     def draw(self, screen):     
         for p in self.getBullets():

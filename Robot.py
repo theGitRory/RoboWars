@@ -1,9 +1,12 @@
 import pygame
-from Settings import Settings
-from abc import abstractmethod
-from Bullet import Bullet
-from BulletManager import BulletManager
 import time
+from abc import abstractmethod
+
+
+from manager.BulletManager import BulletManager
+from Settings import Settings
+from Bullet import Bullet
+
 
 
 class Robot(pygame.sprite.Sprite):
@@ -87,9 +90,12 @@ class Robot(pygame.sprite.Sprite):
     def shoot(self):
         last = round(time.time() * 1000)
         if self.canRunCommand() and (last - self.__lastBulletFired) > Settings.BULLET_TICK:
-            BulletManager.SINGLETON.addBullets(Bullet(self.__rect.center, self.direction.normalize()))
+            BulletManager.SINGLETON.addBullets(Bullet(self.__rect.center, self.direction.normalize(),self.__name))
             self.__lastBulletFired = last
             self.__commandsIssued += 1
+
+    def getRobotName(self):
+        return self.__name
   
     def canRunCommand(self):
         boolVal = self.isAlive() and self.__commandsIssued < Settings.MAX_COMMANDS_PER_TICK

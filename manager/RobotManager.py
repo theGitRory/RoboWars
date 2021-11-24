@@ -1,8 +1,10 @@
 import pygame
-from AIRobot import AIRobot
-from DanielRobot import DanielRobot
+from robots.AIRobot import AIRobot
+from robots.DanielRobot import DanielRobot
 
 class RobotManager():
+    SINGLETON = None
+
     def __init__(self, sprites):
         self.__robotarr = []
         self.__sprites = sprites
@@ -12,6 +14,15 @@ class RobotManager():
     def addRobot(self, robot):
         self.__robotarr.append(robot)
         self.__sprites.add(robot)
+
+    @staticmethod
+    def getRobotManager():
+        return RobotManager.SINGLETON
+    
+    @staticmethod
+    def createRobotManager(sprites):
+        RobotManager.SINGLETON = RobotManager(sprites)
+        return RobotManager.SINGLETON
 
     def getRobots(self):
         return self.__robotarr

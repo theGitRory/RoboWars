@@ -1,9 +1,9 @@
 import pygame
-from AIRobot import AIRobot
-from DanielRobot import DanielRobot
-from RobotManager import RobotManager
+from manager.RobotManager import RobotManager
+from manager.BulletManager import BulletManager
+from manager.GameManager import GameManager
 from Settings import Settings
-from BulletManager import BulletManager
+
 pygame.init()
 pygame.font.init() 
 
@@ -15,7 +15,8 @@ running = True
 clock = pygame.time.Clock()
 
 myBulletManager = BulletManager.createBulletManager(screen)
-myRobotManager =  RobotManager(sprites)
+myRobotManager =  RobotManager.createRobotManager(sprites)
+myGameManager =  GameManager.createGameManager()
 
 Settings.lastUpdatedTick = pygame.time.get_ticks()
 
@@ -34,6 +35,7 @@ def draw():
 def update(events, dt):
     myBulletManager.update(events, dt)
     myRobotManager.update(events)
+    myGameManager.update()
 
 clock = pygame.time.Clock()
 
