@@ -18,11 +18,11 @@ class GameManager():
 
         for robo in roboArr:
             for bullet in bulletArr:
-                if bullet.getRect().colliderect(robo.getRect()) and bullet.getRobotName() != robo.getRobotName():
-                    print("COLLIDE")
+                if robo.isAlive() and bullet.getRobotName() != robo.getRobotName() and bullet.getRect().colliderect(robo.getRect()):
+                    robo.takeDamage(10)
+                    bullet.destroy()
                     pass
         
-        print(str(len(roboArr)) + " " + str(len(bulletArr)))
 
 
     @staticmethod
