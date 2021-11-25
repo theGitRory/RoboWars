@@ -10,5 +10,6 @@ class Settings:
     MAX_COMMANDS_PER_TICK = 2
     BULLET_SPEED = 10
     BULLET_TICK = 1000
+    BULLET_DAMANGE = 10
     lastUpdatedTick = 0
 

@@ -1,6 +1,4 @@
 import pygame
-from robots.AIRobot import AIRobot
-from robots.DanielRobot import DanielRobot
 
 class RobotManager():
     SINGLETON = None
@@ -8,8 +6,7 @@ class RobotManager():
     def __init__(self, sprites):
         self.__robotarr = []
         self.__sprites = sprites
-        self.addRobot(DanielRobot(150, 150, "robot.png", "DanielRobot"))
-        self.addRobot(AIRobot(300, 300, "robot2.png", "AIRobot"))
+
 
     def addRobot(self, robot):
         self.__robotarr.append(robot)

@@ -1,13 +1,13 @@
 import pygame
 import time
 from abc import abstractmethod
+import copy
 
-
-from manager.BulletManager import BulletManager
 from Settings import Settings
 from Bullet import Bullet
-
-
+from manager.GameManager import GameManager
+from manager.RobotManager import RobotManager
+from manager.BulletManager import BulletManager
 
 class Robot(pygame.sprite.Sprite):
 
@@ -46,22 +46,7 @@ class Robot(pygame.sprite.Sprite):
         return self.__originalsurf.get_size()
 
     def getHealth(self):
-        return self.__health
-
-    def turn(self, angle):
-        if self.canRunCommand():
-            self.__angle += angle
-            self.__surf = pygame.transform.rotate(self.__originalsurf, self.__angle)
-            x = self.__rect.centerx
-            y = self.__rect.centery
-            self.__rect = self.__surf.get_rect(center = self.__originalsurf.get_rect(center = (x, y)).center)
-            self.__commandsIssued += 1
-
-    def turnLeft(self):
-        self.turn(Settings.TURN_SPEED)
-
-    def turnRight(self):
-        self.turn(-Settings.TURN_SPEED)        
+        return self.__health    
     
     def takeDamage(self, amount):
         self.__health -= amount
@@ -101,37 +86,84 @@ class Robot(pygame.sprite.Sprite):
         boolVal = self.isAlive() and self.__commandsIssued < Settings.MAX_COMMANDS_PER_TICK
         return boolVal
 
-    def __move(self, x, y):
-        self.__rect = self.__rect.move(x, y)
-        self.__commandsIssued += 1
-        pass
+
+
+    def turn(self, angle):
+        if self.canRunCommand() and not GameManager.getGameManager().checkCollision(self.__rect, self.getName()):
+            self.__angle += angle
+            self.__surf = pygame.transform.rotate(self.__originalsurf, self.__angle)
+            x = self.__rect.centerx
+            y = self.__rect.centery
+            self.__rect = self.__surf.get_rect(center = self.__originalsurf.get_rect(center = (x, y)).center)
+            self.__commandsIssued += 1
+            return True
+            
+        return False
+
+    def turnLeft(self):
+       return self.turn(Settings.TURN_SPEED)
+
+    def turnRight(self):
+        return self.turn(-Settings.TURN_SPEED)    
 
     def moveLeft(self):
         if self.canRunCommand():
-            if self.__rect.centerx > (self.getImageSize()[0] / 2):
-                self.__rect = self.__rect.move(-Settings.SPEED, 0)
-                self.__commandsIssued += 1
-           
+            speed = -Settings.SPEED
+            rectCopy = copy.deepcopy(self.__rect)
+            rectCopy = rectCopy.move(speed, 0)
+
+            isColliding = GameManager.getGameManager().checkCollision(rectCopy, self.getName())
+
+            if self.__rect.centerx > (self.getImageSize()[0] / 2) and not isColliding:
+                self.__rect = self.__rect.move(speed, 0)
+                self.__commandsIssued += 1     
+                return True 
+        
+        return False
 
     def moveRight(self):
         if self.canRunCommand():
-            if self.__rect.centerx < Settings.SCREEN_WIDTH - (self.getImageSize()[0] / 2):
+            rectCopy = copy.deepcopy(self.__rect)
+            rectCopy = rectCopy.move(Settings.SPEED, 0)
+            
+            isColliding = GameManager.getGameManager().checkCollision(rectCopy, self.getName())
+
+            if self.__rect.centerx < Settings.SCREEN_WIDTH - (self.getImageSize()[0] / 2) and not isColliding:
                 self.__rect = self.__rect.move(Settings.SPEED, 0)
                 self.__commandsIssued += 1
+                return True
+
+        return False
 
 
     def moveUp(self):
         if self.canRunCommand():
-            if self.__rect.centery > (self.getOriginalSize()[1] / 2):
+            rectCopy = copy.deepcopy(self.__rect)
+            rectCopy = rectCopy.move(-Settings.SPEED, 0)
+
+            isColliding = GameManager.getGameManager().checkCollision(rectCopy, self.getName())
+
+            if self.__rect.centery > (self.getOriginalSize()[1] / 2) and not isColliding:
                 self.__rect = self.__rect.move(0, -Settings.SPEED)
                 self.__commandsIssued += 1
+                return True
+            
+        return False
 
 
     def moveDown(self):
         if self.canRunCommand():
-            if self.__rect.centery < Settings.SCREEN_HEIGHT - (self.getImageSize()[0] / 2):
+            rectCopy = copy.deepcopy(self.__rect)
+            rectCopy = rectCopy.move(-Settings.SPEED, 0)
+
+            isColliding = GameManager.getGameManager().checkCollision(rectCopy, self.getName())
+
+            if self.__rect.centery < Settings.SCREEN_HEIGHT - (self.getImageSize()[0] / 2)  and not isColliding:
                 self.__rect = self.__rect.move(0, Settings.SPEED)
                 self.__commandsIssued += 1
+                return True
+            
+        return False
 
     def draw(self, screen):
         # Draw the actual robot
@@ -147,4 +179,3 @@ class Robot(pygame.sprite.Sprite):
     @abstractmethod
     def update(self):
         self.direction = pygame.Vector2(1, 0).rotate(-self.__angle)
-        #raise Exception('Update method not implemented')
