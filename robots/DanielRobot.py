@@ -7,9 +7,11 @@ class DanielRobot(Robot):
     
     def update(self):
         super().update()
+        state = self.state
         #self.moveDown()
         self.turnRight()
         self.shoot()
+        print(str(state))
         #self.moveUp()
         #self.moveLeft()
         #self.moveRight()

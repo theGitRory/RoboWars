@@ -34,7 +34,7 @@ class GameManager():
         roboArr = RobotManager.getRobotManager().getRobots()
 
         for robo in roboArr:
-            if robo.isAlive() and name != robo.getName() and rect.colliderect(robo.getRect()):
+            if robo.isAlive() and name != robo.getRobotName() and rect.colliderect(robo.getRect()):
                 return True
         
         return False

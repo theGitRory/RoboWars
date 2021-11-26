@@ -24,11 +24,26 @@ class RobotManager():
     def getRobots(self):
         return self.__robotarr
 
+    def getState(self):
+        state = {}
+        for p in self.__robotarr:
+            if(p.isAlive()):
+                state[p.getRobotName()] = {"health": p.getHealth(), "loc": p.getRect(), "angle": p.getAngle()}
+                pass
+            pass       
+        return state 
+
     def update(self, events):
         for p in self.__robotarr:
             if p.isAlive():
                 p.updateBegin()
                 p.update()
+
+        state = self.getState()
+
+        for p in self.__robotarr:
+            if p.isAlive():  
+                  p.updateEnd(state)
     
     def draw(self, screen):
         for p in self.getRobots():

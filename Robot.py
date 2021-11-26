@@ -19,6 +19,8 @@ class Robot(pygame.sprite.Sprite):
         self.__name = name
         self.__angle = 0
         self.direction = pygame.Vector2(1, 0)
+        self.state = {}
+
 
         #
         #   Settings
@@ -28,13 +30,13 @@ class Robot(pygame.sprite.Sprite):
         self.__rect.centery = y
         self.__rect.centerx = x
         self.__myfont = pygame.font.SysFont('Comic Sans MS', 20)
-        self.__textSurface = self.__myfont.render(self.getName() + " - " + str(self.getHealth()), False, (0, 0, 0))
+        self.__textSurface = self.__myfont.render(self.getRobotName() + " - " + str(self.getHealth()), False, (0, 0, 0))
         self.__isAlive = True
         self.__commandsIssued = 0
         self.__lastBulletFired = 0
 
-    def getName(self):
-        return self.__name
+    def getAngle(self):
+        return self.__angle
 
     def getTextSurface(self):
         return self.__textSurface
@@ -50,7 +52,7 @@ class Robot(pygame.sprite.Sprite):
     
     def takeDamage(self, amount):
         self.__health -= amount
-        self.__textSurface = self.__myfont.render(self.getName() + " - " + str(self.getHealth()), False, (0, 0, 0))
+        self.__textSurface = self.__myfont.render(self.getRobotName() + " - " + str(self.getHealth()), False, (0, 0, 0))
 
     def isAlive(self):
         if self.getHealth() <= 0:
@@ -59,9 +61,6 @@ class Robot(pygame.sprite.Sprite):
 
     def getSurf(self):
         return self.__surf
-
-    def updateBegin(self):
-        self.__commandsIssued = 0
     
     def getRect(self):
         return self.__rect
@@ -86,11 +85,13 @@ class Robot(pygame.sprite.Sprite):
         boolVal = self.isAlive() and self.__commandsIssued < Settings.MAX_COMMANDS_PER_TICK
         return boolVal
 
-
-
     def turn(self, angle):
-        if self.canRunCommand() and not GameManager.getGameManager().checkCollision(self.__rect, self.getName()):
+        if self.canRunCommand() and not GameManager.getGameManager().checkCollision(self.__rect, self.getRobotName()):
             self.__angle += angle
+
+            if self.__angle % 360 == 0:
+                self.__angle = 0
+
             self.__surf = pygame.transform.rotate(self.__originalsurf, self.__angle)
             x = self.__rect.centerx
             y = self.__rect.centery
@@ -112,7 +113,7 @@ class Robot(pygame.sprite.Sprite):
             rectCopy = copy.deepcopy(self.__rect)
             rectCopy = rectCopy.move(speed, 0)
 
-            isColliding = GameManager.getGameManager().checkCollision(rectCopy, self.getName())
+            isColliding = GameManager.getGameManager().checkCollision(rectCopy, self.getRobotName())
 
             if self.__rect.centerx > (self.getImageSize()[0] / 2) and not isColliding:
                 self.__rect = self.__rect.move(speed, 0)
@@ -126,7 +127,7 @@ class Robot(pygame.sprite.Sprite):
             rectCopy = copy.deepcopy(self.__rect)
             rectCopy = rectCopy.move(Settings.SPEED, 0)
             
-            isColliding = GameManager.getGameManager().checkCollision(rectCopy, self.getName())
+            isColliding = GameManager.getGameManager().checkCollision(rectCopy, self.getRobotName())
 
             if self.__rect.centerx < Settings.SCREEN_WIDTH - (self.getImageSize()[0] / 2) and not isColliding:
                 self.__rect = self.__rect.move(Settings.SPEED, 0)
@@ -141,7 +142,7 @@ class Robot(pygame.sprite.Sprite):
             rectCopy = copy.deepcopy(self.__rect)
             rectCopy = rectCopy.move(-Settings.SPEED, 0)
 
-            isColliding = GameManager.getGameManager().checkCollision(rectCopy, self.getName())
+            isColliding = GameManager.getGameManager().checkCollision(rectCopy, self.getRobotName())
 
             if self.__rect.centery > (self.getOriginalSize()[1] / 2) and not isColliding:
                 self.__rect = self.__rect.move(0, -Settings.SPEED)
@@ -156,7 +157,7 @@ class Robot(pygame.sprite.Sprite):
             rectCopy = copy.deepcopy(self.__rect)
             rectCopy = rectCopy.move(-Settings.SPEED, 0)
 
-            isColliding = GameManager.getGameManager().checkCollision(rectCopy, self.getName())
+            isColliding = GameManager.getGameManager().checkCollision(rectCopy, self.getRobotName())
 
             if self.__rect.centery < Settings.SCREEN_HEIGHT - (self.getImageSize()[0] / 2)  and not isColliding:
                 self.__rect = self.__rect.move(0, Settings.SPEED)
@@ -176,6 +177,12 @@ class Robot(pygame.sprite.Sprite):
 
         screen.blit(self.getTextSurface(),(x, y))
 
+    def updateBegin(self):
+        self.__commandsIssued = 0
+
     @abstractmethod
     def update(self):
         self.direction = pygame.Vector2(1, 0).rotate(-self.__angle)
+
+    def updateEnd(self, state):
+        self.state = state     
