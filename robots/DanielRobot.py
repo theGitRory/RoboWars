@@ -8,13 +8,13 @@ class DanielRobot(Robot):
     def update(self):
         super().update()
         state = self.state
-        self.moveDown()
-        #self.turnRight()
+        #self.moveDown()
+        self.turnRight()
         #print(str(state))
+        
         if(state == {}):
             return
 
-        self.isLookingAtOld()
         if self.isLookingAt(state["AIRobot"]):
             self.shoot()
         
