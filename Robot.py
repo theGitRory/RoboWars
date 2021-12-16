@@ -2,7 +2,7 @@ import pygame
 import time
 from abc import abstractmethod
 import copy
-
+import math
 from Settings import Settings
 from Bullet import Bullet
 from manager.GameManager import GameManager
@@ -106,6 +106,38 @@ class Robot(pygame.sprite.Sprite):
 
     def turnRight(self):
         return self.turn(-Settings.TURN_SPEED)    
+
+    def isLookingAtOld(self):
+        for robot1 in RobotManager.getRobotManager().getRobots():
+            robot1x = robot1.getRect().centerx
+            robot1y = robot1.getRect().centery
+            for robot2 in RobotManager.getRobotManager().getRobots():
+                robot2x = robot2.getRect().centerx
+                robot2y = robot2.getRect().centery
+				
+				#sanity check
+                if(robot1x == robot2x and robot1y == robot2y):
+					#same robot or same position
+                    continue
+				
+                direction = round(math.atan2((robot2y-robot1y),(robot2x-robot1x))*(180/math.pi),0)
+				#tolerance is magic number!!!
+                tolerance = 2
+                if(direction == robot1.getAngle() or (direction >= robot1.getAngle() - tolerance and direction <= robot1.getAngle() + tolerance)):
+					#pewpew
+                    print("pewpew1()")
+					#if you can still fire on tanks behind other tanks then keep going or break inner loop.
+
+    def isLookingAt(self, robotState):
+        direction = round(math.atan2((robotState["centery"]-self.getRect().centery),(robotState["centerx"]-self.getRect().centerx))*(180/math.pi),0)
+		#tolerance is magic number!!!
+        tolerance = 2
+        if(direction == self.getAngle() or (direction >= self.getAngle() - tolerance and direction <= self.getAngle() + tolerance)):
+            print("pewpew2()")
+            return True
+
+        return False
+
 
     def moveLeft(self):
         if self.canRunCommand():

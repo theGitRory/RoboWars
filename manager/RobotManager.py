@@ -28,7 +28,7 @@ class RobotManager():
         state = {}
         for p in self.__robotarr:
             if(p.isAlive()):
-                state[p.getRobotName()] = {"health": p.getHealth(), "loc": p.getRect(), "angle": p.getAngle()}
+                state[p.getRobotName()] = {"health": p.getHealth(), "loc": p.getRect(), "angle": p.getAngle(), "centerx": p.getRect().centerx,  "centery": p.getRect().centery}
                 pass
             pass       
         return state 

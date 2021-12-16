@@ -16,8 +16,8 @@ running = True
 clock = pygame.time.Clock()
 
 myGameManager =  GameManager.createGameManager(screen, sprites)
-RobotManager.getRobotManager().addRobot(DanielRobot(150, 150, "robot.png", "DanielRobot"))
-RobotManager.getRobotManager().addRobot(AIRobot(600, 150, "robot2.png", "AIRobot"))
+RobotManager.getRobotManager().addRobot(DanielRobot(600, 150, "robot.png", "DanielRobot"))
+RobotManager.getRobotManager().addRobot(AIRobot(150, 350, "robot2.png", "AIRobot"))
 
 Settings.lastUpdatedTick = pygame.time.get_ticks()
 
