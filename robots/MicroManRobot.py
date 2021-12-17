@@ -45,6 +45,7 @@ class MicroManRobot(Robot):
                     self.movingDown = True
         
         
+        
         if self.movingLeft and self.movingUp:
             self.turnTowardsAngle(135)
         elif self.movingLeft and self.movingDown:

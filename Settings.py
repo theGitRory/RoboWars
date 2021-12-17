@@ -3,6 +3,7 @@ class Settings:
     SCREEN_HEIGHT = 720
     TICK_RATE = 50
     SPEED = 5
+    SPEED_MARGIN = 10
     TURN_SPEED = 1
     HEALTH = 100
     FONT_TYPE = 'Comic Sans MS'

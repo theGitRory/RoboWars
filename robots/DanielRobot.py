@@ -9,9 +9,6 @@ class DanielRobot(Robot):
     def update(self):
         super().update()
         state = self.state
-        #self.moveDown()
-        #self.turnRight()
-        #print(str(state))
         
         if(state == {}):
             return
@@ -28,8 +25,3 @@ class DanielRobot(Robot):
             self.turnTowards(state["SlowRobot"])
             if self.isLookingAt(state["SlowRobot"]):
                 self.shoot()
-        
-        
-        #self.moveUp()
-        #self.moveLeft()
-        #self.moveRight()

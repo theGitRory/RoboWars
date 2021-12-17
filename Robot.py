@@ -119,6 +119,9 @@ class Robot(pygame.sprite.Sprite):
 
         return False
 
+    def getCommandsLeft(self):
+        return Settings.MAX_COMMANDS_PER_TICK - self.__commandsIssued
+
     #Check if Robot should turn left to face enemy
     def turnTowards(self, robotState):
         direction = round(math.atan2(((robotState["centery"] * -1)-(self.getRect().centery) * -1),(robotState["centerx"]-self.getRect().centerx))*(180/math.pi),0) % 360
@@ -128,35 +131,24 @@ class Robot(pygame.sprite.Sprite):
             if(((direction % 360)-(self.getAngle()%360))%360 < 10 or ((self.getAngle()%360)-(direction % 360))%360 < 10):
                 return self.turnLeft()
             else:
-                self.turnLeft()
-                self.turnLeft()
-                self.turnLeft()
                 return self.turnLeft()
         if(((direction % 360)-(self.getAngle()%360))%360 < 10 or ((self.getAngle()%360)-(direction % 360))%360 < 10):
             return self.turnRight()
         else:
-            self.turnRight()
-            self.turnRight()
-            self.turnRight()
             return self.turnRight()
-    
+
+
     #Turn towards a particular angle
     def turnTowardsAngle(self, angle):
         if(((angle % 360)-(self.getAngle()%360))%360 < 179):
             if(((angle % 360)-(self.getAngle()%360))%360 < 10 or ((self.getAngle()%360)-(angle % 360))%360 < 10):
                 return self.turnLeft()
             else:
-                self.turnLeft()
-                self.turnLeft()
-                self.turnLeft()
                 return self.turnLeft()
 
         if(((angle % 360)-(self.getAngle()%360))%360 < 10 or ((self.getAngle()%360)-(angle % 360))%360 < 10):
             return self.turnRight()
         else:
-            self.turnRight()
-            self.turnRight()
-            self.turnRight()
             return self.turnRight()
 
     #def findNearestBot(self)
@@ -195,7 +187,7 @@ class Robot(pygame.sprite.Sprite):
     def moveUp(self):
         if self.canRunCommand():
             rectCopy = copy.deepcopy(self.__rect)
-            rectCopy = rectCopy.move(-Settings.SPEED, 0)
+            rectCopy = rectCopy.move(0, -Settings.SPEED)
 
             isColliding = GameManager.getGameManager().checkCollision(rectCopy, self.getRobotName())
 
@@ -206,11 +198,10 @@ class Robot(pygame.sprite.Sprite):
             
         return False
 
-
     def moveDown(self):
         if self.canRunCommand():
             rectCopy = copy.deepcopy(self.__rect)
-            rectCopy = rectCopy.move(-Settings.SPEED, 0)
+            rectCopy = rectCopy.move(0, Settings.SPEED)
 
             isColliding = GameManager.getGameManager().checkCollision(rectCopy, self.getRobotName())
 

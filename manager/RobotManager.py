@@ -7,19 +7,17 @@ class RobotManager():
         self.__robotarr = []
         self.__sprites = sprites
         self.__posArray = []
-        self.__posArray.append(pygame.Vector2(150, 150))
-        self.__posArray.append(pygame.Vector2(300, 300))
-        self.__posArray.append(pygame.Vector2(550, 550))
+        self.__posArray.append(pygame.Vector2(50, 50))
+        self.__posArray.append(pygame.Vector2(50, 250))
+        self.__posArray.append(pygame.Vector2(50, 450))
 
-        self.__posArray.append(pygame.Vector2(700, 700))
-        self.__posArray.append(pygame.Vector2(750, 750))
+        self.__posArray.append(pygame.Vector2(800, 50))
+        self.__posArray.append(pygame.Vector2(450, 50))
 
 
 
 
     def addRobot(self, robot):
-        print(str(len(self.__robotarr)))
-
         robot.getRect().centerx = self.__posArray[len(self.__robotarr)].x
         robot.getRect().centery = self.__posArray[len(self.__robotarr)].y
 

@@ -3,7 +3,7 @@ import time
 from manager.GameManager import GameManager
 from Settings import Settings
 from manager.RobotManager import RobotManager
-from robots.AIRobot import AIRobot
+from robots.CrazyRobot import CrazyRobot
 from robots.DanielRobot import DanielRobot
 from robots.SlowRobot import SlowRobot
 from robots.MicroManRobot import MicroManRobot
@@ -20,7 +20,7 @@ clock = pygame.time.Clock()
 
 myGameManager =  GameManager.createGameManager(screen, sprites)
 RobotManager.getRobotManager().addRobot(DanielRobot("robot.png", "DanielRobot"))
-RobotManager.getRobotManager().addRobot(AIRobot("robot2.png", "AIRobot"))
+RobotManager.getRobotManager().addRobot(CrazyRobot("robot2.png", "AIRobot"))
 RobotManager.getRobotManager().addRobot(MicroManRobot("robot2.png", "MicroManRobot"))
 RobotManager.getRobotManager().addRobot(SlowRobot("robot2.png", "SlowRobot"))
 

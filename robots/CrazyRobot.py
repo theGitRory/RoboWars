@@ -1,20 +1,19 @@
 import pygame
 from Robot import Robot
 
-class AIRobot(Robot):
+class CrazyRobot(Robot):
     def __init__(self, image, name):
         super().__init__( image, name)
         self.movingLeft = True
         self.movingRight = False
         self.movingUp = False
         self.movingDown = True
+        self.previousX = 0
+        self.previousY = 0
 
     def update(self):
         super().update()
 
-        #self.turnLeft()
-        #self.shoot()
-        
         preX = self.getRect().centerx
         preY = self.getRect().centery
         
@@ -58,3 +57,7 @@ class AIRobot(Robot):
             self.turnTowardsAngle(-45)
 
         self.shoot()
+
+        self.previousX = self.getRect().centerx
+        self.previousY = self.getRect().centery
+
