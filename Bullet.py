@@ -27,7 +27,7 @@ class Bullet(pygame.sprite.Sprite):
             return False
 
         if not pygame.display.get_surface().get_rect().contains(self.rect):
-            self.kill()
+            self.destroy()
             return False
             
         return True
