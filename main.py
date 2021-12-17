@@ -5,6 +5,8 @@ from Settings import Settings
 from manager.RobotManager import RobotManager
 from robots.AIRobot import AIRobot
 from robots.DanielRobot import DanielRobot
+from robots.SlowRobot import SlowRobot
+from robots.MicroManRobot import MicroManRobot
 
 pygame.init()
 pygame.font.init() 
@@ -19,6 +21,8 @@ clock = pygame.time.Clock()
 myGameManager =  GameManager.createGameManager(screen, sprites)
 RobotManager.getRobotManager().addRobot(DanielRobot("robot.png", "DanielRobot"))
 RobotManager.getRobotManager().addRobot(AIRobot("robot2.png", "AIRobot"))
+RobotManager.getRobotManager().addRobot(MicroManRobot("robot2.png", "MicroManRobot"))
+RobotManager.getRobotManager().addRobot(SlowRobot("robot2.png", "SlowRobot"))
 
 Settings.lastUpdatedTick = pygame.time.get_ticks()
 

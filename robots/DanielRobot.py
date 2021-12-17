@@ -20,6 +20,15 @@ class DanielRobot(Robot):
             self.turnTowards(state["AIRobot"])
             if self.isLookingAt(state["AIRobot"]):
                 self.shoot()
+        elif "MicroManRobot" in state:
+            self.turnTowards(state["MicroManRobot"])
+            if self.isLookingAt(state["MicroManRobot"]):
+                self.shoot()
+        elif "SlowRobot" in state:
+            self.turnTowards(state["SlowRobot"])
+            if self.isLookingAt(state["SlowRobot"]):
+                self.shoot()
+        
         
         #self.moveUp()
         #self.moveLeft()
