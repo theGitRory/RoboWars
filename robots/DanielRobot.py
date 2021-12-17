@@ -16,12 +16,7 @@ class DanielRobot(Robot):
         if(state == {}):
             return
         
-        if self.turnLeftTowards(state["AIRobot"]):
-            #print("left")
-            self.turnLeft()
-        else:
-            #print("Right") 
-            self.turnRight()
+        self.turnTowards(state["AIRobot"])
 
         if self.isLookingAt(state["AIRobot"]):
             self.shoot()
