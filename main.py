@@ -1,4 +1,5 @@
 import pygame
+import time
 from manager.GameManager import GameManager
 from Settings import Settings
 from manager.RobotManager import RobotManager
@@ -16,8 +17,8 @@ running = True
 clock = pygame.time.Clock()
 
 myGameManager =  GameManager.createGameManager(screen, sprites)
-RobotManager.getRobotManager().addRobot(DanielRobot(600, 150, "robot.png", "DanielRobot"))
-RobotManager.getRobotManager().addRobot(AIRobot(150, 350, "robot2.png", "AIRobot"))
+RobotManager.getRobotManager().addRobot(DanielRobot("robot.png", "DanielRobot"))
+RobotManager.getRobotManager().addRobot(AIRobot("robot2.png", "AIRobot"))
 
 Settings.lastUpdatedTick = pygame.time.get_ticks()
 
@@ -36,8 +37,12 @@ def update(events, dt):
     myGameManager.update(events, dt)
 
 clock = pygame.time.Clock()
+started = False
 
 while running:
+
+
+
     # Did the user click the window close button?
     events = pygame.event.get()
     for event in events:
@@ -49,6 +54,12 @@ while running:
         Settings.lastUpdatedTick = pygame.time.get_ticks()
         update(events, dt)
         draw()
+
+        #Just pause screen for 2 seconds on start to see positions
+        if(not started):
+            started = True
+            time.sleep(2)
     
     dt = clock.tick(60)
+
 

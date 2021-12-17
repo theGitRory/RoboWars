@@ -2,8 +2,8 @@ import pygame
 from Robot import Robot
 
 class AIRobot(Robot):
-    def __init__(self, x, y, image, name):
-        super().__init__(x, y, image, name)
+    def __init__(self, image, name):
+        super().__init__( image, name)
         self.movingLeft = True
         self.movingRight = False
         self.movingUp = False

@@ -3,8 +3,8 @@ import math
 from Robot import Robot
 
 class DanielRobot(Robot):
-    def __init__(self, x, y, image, name):
-        super().__init__(x, y, image, name)
+    def __init__(self, image, name):
+        super().__init__(image, name)
     
     def update(self):
         super().update()

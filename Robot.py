@@ -11,7 +11,7 @@ from manager.BulletManager import BulletManager
 
 class Robot(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, image, name):
+    def __init__(self, image, name):
         super(Robot, self).__init__()
         self.__surf = pygame.image.load(image).convert()
         self.__originalsurf = pygame.image.load(image).convert()
@@ -27,8 +27,8 @@ class Robot(pygame.sprite.Sprite):
         #
         self.__speed = Settings.SPEED
         self.__health = Settings.HEALTH
-        self.__rect.centery = y
-        self.__rect.centerx = x
+        self.__rect.centery = 0
+        self.__rect.centerx = 0
         self.__myfont = pygame.font.SysFont('Comic Sans MS', 20)
         self.__isAlive = True
         self.__commandsIssued = 0
@@ -117,16 +117,6 @@ class Robot(pygame.sprite.Sprite):
         if((direction% 360) == (self.getAngle()% 360) or ((direction% 360) >= (self.getAngle()% 360) - tolerance and (direction% 360) <= (self.getAngle()% 360) + tolerance)):
             return True
 
-        return False
-
-    #Check if Robot should turn left to face enemy
-    def turnLeftTowards(self, robotState):
-        direction = round(math.atan2(((robotState["centery"] * -1)-(self.getRect().centery) * -1),(robotState["centerx"]-self.getRect().centerx))*(180/math.pi),0) % 360
-        
-        #print(f'direction:  {direction % 360:.0f} angle: {self.getAngle()% 360:.0f} result: {(((direction % 360)-(self.getAngle()%360))%360 < 179)} ')
-        if(((direction % 360)-(self.getAngle()%360))%360 < 179):
-            return True
-        
         return False
 
     #Check if Robot should turn left to face enemy
