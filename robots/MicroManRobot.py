@@ -1,19 +1,16 @@
 import pygame
 from Robot import Robot
 
-class AIRobot(Robot):
+class MicroManRobot(Robot):
     def __init__(self, image, name):
-        super().__init__( image, name)
-        self.movingLeft = True
-        self.movingRight = False
-        self.movingUp = False
-        self.movingDown = True
+        super().__init__(image, name)
+        self.movingLeft = False
+        self.movingRight = True
+        self.movingUp = True
+        self.movingDown = False
 
     def update(self):
         super().update()
-
-        #self.turnLeft()
-        #self.shoot()
         
         preX = self.getRect().centerx
         preY = self.getRect().centery
@@ -56,5 +53,7 @@ class AIRobot(Robot):
             self.turnTowardsAngle(45)
         else:
             self.turnTowardsAngle(-45)
+        
+
 
         self.shoot()
