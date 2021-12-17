@@ -2,6 +2,7 @@ import pygame
 from Robot import Robot
 
 class MicroManRobot(Robot):
+    moveState = 0
     def __init__(self, image, name):
         super().__init__(image, name)
         self.movingLeft = False
@@ -11,11 +12,19 @@ class MicroManRobot(Robot):
 
     def update(self):
         super().update()
-        
-        preX = self.getRect().centerx
-        preY = self.getRect().centery
-        
         state = self.state
+        
+        if ("DanielRobot" in state or "MadRobot" in state or "SlowRobot" in state or "ScatterRobot" in state or "AIRobot" in state):
+            self.moveState = self.moveState + 1
+        else:
+            self.turnRight()
+            self.shoot()
+            self.turnRight()
+            self.shoot()
+            self.turnRight()
+            self.shoot()
+            self.turnRight()
+            self.shoot()
         
         if self.movingLeft:
             self.movingLeft = self.moveLeft()

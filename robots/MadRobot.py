@@ -1,7 +1,8 @@
 import pygame
+import random
 from Robot import Robot
 
-class CrazyRobot(Robot):
+class MadRobot(Robot):
     moveState = 0
     def __init__(self, image, name):
         super().__init__( image, name)
@@ -9,15 +10,12 @@ class CrazyRobot(Robot):
         self.movingRight = False
         self.movingUp = False
         self.movingDown = True
-        self.previousX = 0
-        self.previousY = 0
 
     def update(self):
         super().update()
         
         state = self.state
-        
-        if ("DanielRobot" in state or "MadRobot" in state or "SlowRobot" in state or "ScatterRobot" in state or "MicroManRobot" in state):
+        if ("DanielRobot" in state or "MicroManRobot" in state or "SlowRobot" in state or "ScatterRobot" in state or "AIRobot" in state):
             self.moveState = self.moveState + 1
         else:
             self.turnRight()
@@ -28,6 +26,31 @@ class CrazyRobot(Robot):
             self.shoot()
             self.turnRight()
             self.shoot()
+            
+        if((self.moveState)% 55 == 0):
+            #change direction randomly every so often!
+            rando = random.randint(0, 3)
+            if rando == 0:
+                self.movingLeft = True
+                self.movingRight = False
+                self.movingUp = False
+                self.movingDown = True
+            elif rando == 1:
+                self.movingLeft = True
+                self.movingRight = False
+                self.movingUp = True
+                self.movingDown = False
+            elif rando == 2:
+                self.movingLeft = False
+                self.movingRight = True
+                self.movingUp = False
+                self.movingDown = True
+            elif rando == 3:
+                self.movingLeft = False
+                self.movingRight = False
+                self.movingUp = True
+                self.movingDown = False
+
         
         if self.movingLeft:
             self.movingLeft = self.moveLeft()
@@ -67,5 +90,3 @@ class CrazyRobot(Robot):
             self.turnTowardsAngle(-45)
 
         self.shoot()
-
-

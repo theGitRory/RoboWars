@@ -14,14 +14,21 @@ class SlowRobot(Robot):
     def update(self):
         super().update()
         
-        SlowRobot.moveState = SlowRobot.moveState + 1
+        state = self.state
         
-        if((SlowRobot.moveState)% 25 == 0 or SlowRobot.moveState < 0):
-        
-            preX = self.getRect().centerx
-            preY = self.getRect().centery
+        if ("DanielRobot" in state or "MadRobot" in state or "AIRobot" in state or "ScatterRobot" in state or "MicroManRobot" in state):
+            self.moveState = self.moveState + 1
+        else:
+            self.turnRight()
+            self.shoot()
+            self.turnRight()
+            self.shoot()
+            self.turnRight()
+            self.shoot()
+            self.turnRight()
+            self.shoot()
             
-            
+        if((self.moveState)% 25 == 0 or self.moveState < 0):
             
             if self.movingLeft:
                 self.movingLeft = self.moveLeft()
@@ -59,10 +66,8 @@ class SlowRobot(Robot):
                 self.turnTowardsAngle(45)
             else:
                 self.turnTowardsAngle(-45)
-            
 
-
-            SlowRobot.shootState = SlowRobot.shootState + 1
+            self.shootState = self.shootState + 1
             
-            if((SlowRobot.shootState)% 10 == 0):
+            if((self.shootState)% 10 == 0):
                 self.shoot()

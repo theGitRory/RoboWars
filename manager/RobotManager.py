@@ -7,12 +7,13 @@ class RobotManager():
         self.__robotarr = []
         self.__sprites = sprites
         self.__posArray = []
-        self.__posArray.append(pygame.Vector2(50, 50))
+        self.__posArray.append(pygame.Vector2(700, 50))
         self.__posArray.append(pygame.Vector2(50, 250))
         self.__posArray.append(pygame.Vector2(50, 450))
 
-        self.__posArray.append(pygame.Vector2(800, 50))
-        self.__posArray.append(pygame.Vector2(450, 50))
+        self.__posArray.append(pygame.Vector2(1000, 50))
+        self.__posArray.append(pygame.Vector2(600, 400))
+        self.__posArray.append(pygame.Vector2(450, 500))
 
 
 
