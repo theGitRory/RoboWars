@@ -109,11 +109,21 @@ class Robot(pygame.sprite.Sprite):
 
     def isLookingAt(self, robotState):
         direction = round(math.atan2(((robotState["centery"] * -1)-(self.getRect().centery) * -1),(robotState["centerx"]-self.getRect().centerx))*(180/math.pi),0) % 360
-		#tolerance is magic number!!!
-        tolerance = 2
-        if(direction == (self.getAngle()% 360) or (direction >= (self.getAngle()% 360) - tolerance and direction <= (self.getAngle()% 360) + tolerance)):
+        #tolerance is magic number!!!
+        tolerance = 10
+        if((direction% 360) == (self.getAngle()% 360) or ((direction% 360) >= (self.getAngle()% 360) - tolerance and (direction% 360) <= (self.getAngle()% 360) + tolerance)):
             return True
 
+        return False
+
+    #Check if Robot should turn left to face enemy
+    def turnLeftTowards(self, robotState):
+        direction = round(math.atan2(((robotState["centery"] * -1)-(self.getRect().centery) * -1),(robotState["centerx"]-self.getRect().centerx))*(180/math.pi),0) % 360
+        
+        #print(f'direction:  {direction % 360:.0f} angle: {self.getAngle()% 360:.0f} result: {(((direction % 360)-(self.getAngle()%360))%360 < 179)} ')
+        if(((direction % 360)-(self.getAngle()%360))%360 < 179):
+            return True
+        
         return False
 
 
