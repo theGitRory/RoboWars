@@ -206,6 +206,16 @@ class Robot(pygame.sprite.Sprite):
 
         screen.blit(self.getTextSurface(),(x, y))
 
+        Color_line=(255,0,0)
+        x = self.getRect().centerx
+        y = self.getRect().centery
+        lineLength = 350
+        
+        x2 = x + (lineLength * math.cos((self.getAngle()%360)*(math.pi/180)))
+        y2 = (y + (lineLength * math.sin((self.getAngle()%360)*(math.pi/180))) * (-1))
+        
+        pygame.draw.line(screen, Color_line, (x, y), (x2, y2))       
+
     def updateBegin(self):
         self.__commandsIssued = 0
 
