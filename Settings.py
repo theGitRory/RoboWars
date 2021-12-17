@@ -7,7 +7,7 @@ class Settings:
     HEALTH = 100
     FONT_TYPE = 'Comic Sans MS'
     FONT_SIZE = 20
-    MAX_COMMANDS_PER_TICK = 2
+    MAX_COMMANDS_PER_TICK = 4
     BULLET_SPEED = 10
     BULLET_TICK = 1000
     BULLET_DAMANGE = 10

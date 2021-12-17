@@ -11,6 +11,10 @@ class AIRobot(Robot):
 
     def update(self):
         super().update()
+
+        self.turnLeft()
+        self.shoot()
+
         if self.movingLeft:
             self.movingLeft = self.moveLeft()
             if not self.movingLeft:

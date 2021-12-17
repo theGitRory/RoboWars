@@ -30,10 +30,12 @@ class Robot(pygame.sprite.Sprite):
         self.__rect.centery = y
         self.__rect.centerx = x
         self.__myfont = pygame.font.SysFont('Comic Sans MS', 20)
-        self.__textSurface = self.__myfont.render(self.getRobotName() + " - " + str(self.getHealth()), False, (0, 0, 0))
         self.__isAlive = True
         self.__commandsIssued = 0
+        self.__totalCommandsIssued = 0
         self.__lastBulletFired = 0
+        strToPrint = self.getRobotName() + " - " + str(self.getHealth()) + " - " + str(self.__totalCommandsIssued)
+        self.__textSurface = self.__myfont.render(strToPrint, False, (0, 0, 0))       
 
     def getAngle(self):
         return self.__angle
@@ -52,7 +54,8 @@ class Robot(pygame.sprite.Sprite):
     
     def takeDamage(self, amount):
         self.__health -= amount
-        self.__textSurface = self.__myfont.render(self.getRobotName() + " - " + str(self.getHealth()), False, (0, 0, 0))
+        strToPrint = self.getRobotName() + " - " + str(self.getHealth()) + " - " + str(self.__totalCommandsIssued)
+        self.__textSurface = self.__myfont.render(strToPrint, False, (0, 0, 0))
 
     def isAlive(self):
         if self.getHealth() <= 0:
@@ -217,6 +220,7 @@ class Robot(pygame.sprite.Sprite):
         pygame.draw.line(screen, Color_line, (x, y), (x2, y2))       
 
     def updateBegin(self):
+        self.__totalCommandsIssued += self.__commandsIssued
         self.__commandsIssued = 0
 
     @abstractmethod
